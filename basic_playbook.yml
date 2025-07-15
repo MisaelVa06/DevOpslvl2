@@ -1,0 +1,42 @@
+---
+##Aqui defino los datos globales del play, nombre, hosts, permisos, etc...
+- name: Configurar servidor Rocky Linux
+  hosts: servidores
+  become: yes
+
+
+#Aqui defino las tareas que se van a realizar
+  tasks:
+    - name: Actualizar todos los paquetes
+      dnf:
+        name: '*'
+        state: latest
+
+    - name: Instalar herramientas básicas
+      dnf:
+        name:
+          - vim
+          - curl
+          - wget
+          - git
+        state: present
+
+    - name: Agregar repositorio oficial de Docker
+      shell: |
+        dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      args:
+        executable: /bin/bash
+
+    - name: Instalar Docker
+      dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Iniciar y habilitar Docker
+      systemd:
+        name: docker
+        state: started
+        enabled: true

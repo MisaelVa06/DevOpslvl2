@@ -1,0 +1,12 @@
+*.pyc
+__pycache__/
+*.log
+*.retry
+*.swp
+*.bak
+*.tar.gz
+*.zip
+.idea/
+.vscode/
+.env
+.cache
