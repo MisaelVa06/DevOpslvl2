@@ -1,10 +1,10 @@
-#Proyecto DevOps Nivel 1 – Infraestructura Automatizada con Ansible
+## Proyecto DevOps Nivel 1 – Infraestructura Automatizada con Ansible
 
 Este proyecto consiste en crear una infraestructura DevOps simulada de dos servidores Linux virtuales conectados en red a través de GNS3, donde uno actúa como nodo de control (con Ansible instalado) y el otro como servidor gestionado (donde se automatizan tareas como la instalación de herramientas y Docker).
 
 ---
 
-## 🎯 Objetivo General
+## Objetivo General
 
 Desarrollar una infraestructura automatizada local para practicar conceptos esenciales de DevOps utilizando:
 
@@ -15,7 +15,7 @@ Desarrollar una infraestructura automatizada local para practicar conceptos esen
 
 ---
 
-## 🧱 Infraestructura utilizada
+## Infraestructura utilizada
 
 - **`vm-control`** (Ubuntu Server):
   - Rol: Nodo controlador
@@ -26,7 +26,7 @@ Desarrollar una infraestructura automatizada local para practicar conceptos esen
 
 ---
 
-## 🧰 Herramientas y tecnologías
+## Herramientas y tecnologías
 
 | Componente     | Tecnología               |
 |----------------|--------------------------|
@@ -38,22 +38,27 @@ Desarrollar una infraestructura automatizada local para practicar conceptos esen
 
 ---
 
-## 📁 Estructura del proyecto
+## Estructura del proyecto
 devops-nivel1/
- ├── hosts.ini # Archivo de inventario Ansible 
- ├── basic_playbook.yml # Playbook para configurar vm-web 
- └── README.md # Este documento
+
+    ├── hosts.ini # Archivo de inventario Ansible 
+    ├── basic_playbook.yml # Playbook para configurar vm-web 
+    └── README.md # Este documento
+ 
 ---
 
 ## Requisitos para ejecución
 1. Conexión SSH sin contraseña desde vm-control hacia vm-web.
 2. Usuario remoto (ansible) debe tener privilegios sudo (con o sin contraseña).
 3. Ansible instalado en vm-control:
-    sudo apt install ansible -y
+
+       sudo apt install ansible -y
 
 ## Cómo ejecutar
 Desde vm-control, dentro del proyecto:
-  ansible-playbook -i hosts.ini basic_playbook.yml
+
+       ansible-playbook -i hosts.ini basic_playbook.yml
 
 Si el usuario remoto requiere contraseña para sudo, usa:
-  ansible-playbook -i hosts.ini basic_playbook.yml -K
+
+       ansible-playbook -i hosts.ini basic_playbook.yml -K
