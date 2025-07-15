@@ -41,12 +41,7 @@ Desarrollar una infraestructura automatizada local para practicar conceptos esen
 ---
 
 ## 📁 Estructura del proyecto
-
-devops-nivel1/
-├── hosts.ini # Archivo de inventario Ansible
-├── basic_playbook.yml # Playbook para configurar vm-web
-└── README.md # Este documento
-
+devops-nivel1/ ├── hosts.ini # Archivo de inventario Ansible ├── basic_playbook.yml # Playbook para configurar vm-web └── README.md # Este documento
 ---
 
 ## Requisitos para ejecución
