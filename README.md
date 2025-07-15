@@ -1,8 +1,6 @@
 #Proyecto DevOps Nivel 1 – Infraestructura Automatizada con Ansible
 
-Este proyecto consiste en crear una infraestructura DevOps simulada de dos servidores Linux virtuales conectados en red a través de GNS3, donde 
-uno actúa como nodo de control (con Ansible instalado) y el otro como servidor gestionado (donde se automatizan tareas como la instalación 
-de herramientas y Docker).
+Este proyecto consiste en crear una infraestructura DevOps simulada de dos servidores Linux virtuales conectados en red a través de GNS3, donde uno actúa como nodo de control (con Ansible instalado) y el otro como servidor gestionado (donde se automatizan tareas como la instalación de herramientas y Docker).
 
 ---
 
@@ -41,7 +39,10 @@ Desarrollar una infraestructura automatizada local para practicar conceptos esen
 ---
 
 ## 📁 Estructura del proyecto
-devops-nivel1/ ├── hosts.ini # Archivo de inventario Ansible ├── basic_playbook.yml # Playbook para configurar vm-web └── README.md # Este documento
+devops-nivel1/
+ ├── hosts.ini # Archivo de inventario Ansible 
+ ├── basic_playbook.yml # Playbook para configurar vm-web 
+ └── README.md # Este documento
 ---
 
 ## Requisitos para ejecución
