@@ -1,0 +1,12 @@
+---
+- name: Prueba sintaxis
+  hosts: staging
+  become: true
+
+  roles:
+    - docker
+    - monitoring_stack
+    - proyecto_flask
+    - seguridad_basica
+    - shutdown_containers
+    - update_server

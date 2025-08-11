@@ -1,0 +1,15 @@
+---
+# tasks file for shutdown_containers
+- name: Suspender contenedores monitoreo
+  ansible.builtin.shell: |
+    docker compose -f docker-compose.monitoring.yml down
+  args:
+    chdir: /home/ansible/monitoring
+    executable: /bin/bash
+
+- name: Suspender contenedores flask
+  ansible.builtin.shell: |
+    docker compose down
+  args:
+    chdir: /home/mvasquez/proyectoFlask
+    executable: /bin/bash

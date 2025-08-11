@@ -1,0 +1,21 @@
+---
+# tasks file for docker
+- name: Agregar repositorio oficial de Docker
+  shell: |
+    dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  args:
+    executable: /bin/bash
+
+- name: Instalar Docker
+  dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+
+- name: Iniciar y habilitar Docker
+  systemd:
+    name: docker
+    state: started
+    enabled: true

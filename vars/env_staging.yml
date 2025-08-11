@@ -1,0 +1,34 @@
+env_name: "staging"
+anisble_app_user: "mvasquez"
+anisble_mon_user: "ansible"
+
+## ===Proyecto Flask=== ##
+flask_repo: "https://github.com/MisaelVa06/Proyecto_Flask.git"
+flask_branch: "develop"
+flask_dir: "home/mvasquez/proyecto_Flask"
+flask_compose_file: "docker-compose.yml"
+flask_port: 5002
+
+## ===Stack de monitoreo=== ##
+mon_repo: "https://github.com/MisaelVa06/DevOps---Monitoring.git"
+mon_branch: "main"
+mon_dir: "home/ansible/monitoring"
+mon_compose_file: "docker-compose.monitoring.yml"
+
+
+## ===Puertos=== ##
+prometheus_port: 9090
+grafana_port: 3000
+node_exporter_port: 9100
+cadvisor_port: 8080
+
+git_clone_with_token: true
+
+# === Seguridad / firewall === ##
+firewalld_open_ports:
+  - "22/tcp"
+  - "5002/tcp"
+  - "9090/tcp"
+  - "3000/tcp"
+  - "9100/tcp"
+  - "8080/tcp"

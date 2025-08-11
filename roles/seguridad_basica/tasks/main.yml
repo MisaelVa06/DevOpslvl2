@@ -1,0 +1,48 @@
+---
+- name: Instalar firewalld
+  dnf:
+    name: firewalld
+    state: present
+
+- name: Iniciar y habilitar firewalld
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Permitir puertos requeridos
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop:
+    - 5002/tcp
+    - 9090/tcp
+    - 3000/tcp
+    - 9100/tcp
+    - 8080/tcp
+    - 22/tcp
+
+- name: Verificar estado de firewalld
+  shell: firewall-cmd --list-all
+  register: fw_status
+
+- name: Mostrar estado del firewall
+  debug:
+    var: fw_status.stdout
+
+- name: Instalar fail2ban
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - epel-release
+    - fail2ban
+
+- name: Iniciar y habilitar fail2ban
+  systemd:
+    name: fail2ban
+    state: started
+    enabled: yes
+

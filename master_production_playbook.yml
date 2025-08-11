@@ -1,0 +1,15 @@
+---
+- name: Master Production Playbook
+  hosts: staging
+  become: yes
+  vars_files:
+    - vars/env_production.yml
+    - vault/production.vault
+
+
+  roles:
+    - update_server
+    - seguridad_basica
+    - docker
+    - proyecto_flask
+    - monitoring_stack

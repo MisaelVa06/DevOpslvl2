@@ -1,0 +1,15 @@
+---
+# tasks file for proyecto_flask
+- name: Clonar repositorio
+  ansible.builtin.git:
+    repo: https://{{ lookup('env','GITHUB_TOKEN') }}@github.com/MisaelVa06/Proyecto_Flask.git
+    dest: /home/mvasquez/proyectoFlask
+    version: main
+    force: yes
+
+- name: Docker Compose UP
+  shell: |
+    docker compose up -d
+  args:
+    chdir: /home/mvasquez/proyectoFlask
+    executable: /bin/bash

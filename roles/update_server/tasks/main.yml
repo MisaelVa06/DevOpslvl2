@@ -1,0 +1,14 @@
+---
+- name: Actualizar todos los paquetes
+  dnf:
+    name: '*'
+    state: latest
+
+- name: Instalar herramientas básicas
+  dnf:
+    name:
+      - vim
+      - curl
+      - wget
+      - git
+    state: present

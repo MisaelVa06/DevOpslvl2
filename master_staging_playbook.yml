@@ -1,0 +1,15 @@
+---
+- name: Master Staging Playbook
+  hosts: staging
+  become: yes
+  vars_files:
+    - vars/env_staging.yml
+    - vault/staging.vault
+
+
+  roles:
+    - update_server
+    - seguridad_basica
+    - docker
+    - proyecto_flask
+    - monitoring_stack
