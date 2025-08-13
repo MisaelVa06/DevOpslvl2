@@ -1,15 +1,36 @@
 ---
-# tasks file for proyecto_flask
-- name: Clonar repositorio
+- name: Asegurar directorio de la app Flask
+  ansible.builtin.file:
+    path: "{{ flask_dir }}"
+    state: directory
+    owner: "{{ ansible_app_user | default(ansible_user) }}"
+    mode: "0755"
+
+- name: Clonar/actualizar repositorio Flask
   ansible.builtin.git:
-    repo: https://{{ lookup('env','GITHUB_TOKEN') }}@github.com/MisaelVa06/Proyecto_Flask.git
-    dest: /home/mvasquez/proyectoFlask
-    version: main
+    repo: "{{ (git_clone_with_token | default(true) | bool)
+              | ternary(flask_repo | regex_replace('https://', 'https://' ~ github_token ~ '@'),
+                        flask_repo) }}"
+    dest: "{{ flask_dir }}"
+    version: "{{ flask_branch }}"
     force: yes
 
-- name: Docker Compose UP
-  shell: |
-    docker compose up -d
+- name: Crear .env (no sensibles)
+  ansible.builtin.copy:
+    dest: "{{ flask_dir }}/.env"
+    content: |
+      PORT={{ flask_port | default(5002) }}
+
+- name: Levantar contenedores de Flask con Docker Compose
+  ansible.builtin.shell: "docker compose -f {{ flask_compose_file }} up -d"
   args:
-    chdir: /home/mvasquez/proyectoFlask
+    chdir: "{{ flask_dir }}"
     executable: /bin/bash
+  register: flask_up
+  changed_when: "'Creating' in flask_up.stdout or 'Recreating' in flask_up.stdout or 'done' in flask_up.stdout"
+
+- name: Quitar token de la URL remota (opcional recomendado)
+  ansible.builtin.command: git remote set-url origin "{{ flask_repo }}"
+  args: 
+    chdir: "{{ flask_dir }}" 
+  when: git_clone_with_token | bool

@@ -1,21 +1,46 @@
 ---
-# tasks file for docker
-- name: Agregar repositorio oficial de Docker
-  shell: |
-    dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-  args:
-    executable: /bin/bash
+# roles/docker/tasks/main.yml
 
-- name: Instalar Docker
-  dnf:
+- name: Instalar prerequisitos de Docker
+  ansible.builtin.dnf:
+    name: dnf-plugins-core
+    state: present
+
+- name: Añadir repo Docker CE (soporta check mode)
+  ansible.builtin.yum_repository:
+    name: docker-ce-stable
+    description: Docker CE Stable - $basearch
+    baseurl: "https://download.docker.com/linux/centos/$releasever/$basearch/stable"
+    gpgcheck: yes
+    gpgkey: https://download.docker.com/linux/centos/gpg
+    enabled: yes
+
+- name: Actualizar metadata de DNF
+  ansible.builtin.command: dnf makecache
+  changed_when: false
+
+- name: Instalar Docker y plugins
+  ansible.builtin.dnf:
     name:
       - docker-ce
       - docker-ce-cli
       - containerd.io
+      - docker-compose-plugin
     state: present
 
+- name: Crear grupo docker si no existe
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Agregar usuario al grupo docker
+  ansible.builtin.user:
+    name: "{{ ansible_user | default('mvasquez') }}"
+    groups: docker
+    append: yes
+
 - name: Iniciar y habilitar Docker
-  systemd:
+  ansible.builtin.systemd:
     name: docker
     state: started
     enabled: true

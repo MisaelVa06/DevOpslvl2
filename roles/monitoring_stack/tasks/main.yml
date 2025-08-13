@@ -1,15 +1,25 @@
 ---
-# tasks file for monitoring_stack
-- name: Clonar repositorio
-  ansible.builtin.git:
-    repo: "https://{{ lookup('env','GITHUB_TOKEN') }}@github.com/MisaelVa06/DevOps---Monitoring.git"
-    dest: /home/ansible/monitoring
-    version: main
-    force: yes
+- name: Asegurar directorio del stack de monitoreo
+  ansible.builtin.file:
+    path: "{{ mon_dir }}"
+    state: directory
+    owner: "{{ ansible_mon_user | default(ansible_user) }}"
+    mode: "0755"
 
-- name: Levantar contenedores con Docker Compose
-  ansible.builtin.shell: |
-    docker compose -f docker-compose.monitoring.yml up -d
+- name: Clonar/actualizar repositorio de monitoreo
+  ansible.builtin.git:
+    repo: "{{ (git_clone_with_token | default(true) | bool)
+              | ternary(mon_repo | regex_replace('https://', 'https://' ~ github_token ~ '@'),
+                        mon_repo) }}"
+    dest: "{{ mon_dir }}"
+    version: "{{ mon_branch }}"
+    force: yes
+  no_log: true
+
+- name: Levantar stack de monitoreo con Docker Compose
+  ansible.builtin.shell: "docker compose -f {{ mon_compose_file }} up -d"
   args:
-    chdir: /home/ansible/monitoring
+    chdir: "{{ mon_dir }}"
     executable: /bin/bash
+  register: mon_up
+  changed_when: "'Creating' in mon_up.stdout or 'Recreating' in mon_up.stdout or 'done' in mon_up.stdout"

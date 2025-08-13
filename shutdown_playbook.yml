@@ -1,0 +1,10 @@
+---
+- name: Master Staging Playbook
+  hosts: staging
+  become: yes
+  vars_files:
+    - vars/env_staging.yml
+    - vault/staging.vault
+
+  roles:
+    - shutdown_containers #Flask
