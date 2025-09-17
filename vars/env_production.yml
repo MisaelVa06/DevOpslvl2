@@ -5,14 +5,14 @@ anisble_mon_user: "ansible"
 ## ===Proyecto Flask (App)=== ##
 flask_repo: "https://github.com/MisaelVa06/Proyecto_Flask.git"
 flask_branch: "main"
-flask_dir: "home/mvasquez/proyecto_Flask"
+flask_dir: "flask/proyecto_Flask"
 flask_compose_file: "docker-compose.yml"
 flask_port: 5002
 
 ## ===Stack de monitoreo=== ##
 mon_repo: "https://github.com/MisaelVa06/DevOps---Monitoring.git"
 mon_branch: "main"
-mon_dir: "home/ansible/monitoring"
+mon_dir: "flask/monitoring"
 mon_compose_file: "docker-compose.monitoring.yml"
 
 

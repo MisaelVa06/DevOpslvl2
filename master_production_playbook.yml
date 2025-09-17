@@ -1,6 +1,6 @@
 ---
 - name: Master Production Playbook
-  hosts: staging
+  hosts: production
   become: yes
   vars_files:
     - vars/env_production.yml

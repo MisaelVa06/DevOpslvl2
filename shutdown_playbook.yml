@@ -1,6 +1,6 @@
 ---
-- name: Master Staging Playbook
-  hosts: staging
+- name: shutdown Containers Playbook
+  hosts: production
   become: yes
   vars_files:
     - vars/env_staging.yml
