@@ -1,0 +1,11 @@
+---
+- name: Deploy App Staging Playbook
+  hosts: staging
+  become: yes
+  vars_files:
+    - vars/env_staging.yml
+    - vault/staging.vault
+
+
+  roles:
+    - proyecto_flask
