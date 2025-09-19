@@ -2,9 +2,6 @@
 - name: shutdown Containers Playbook
   hosts: production
   become: yes
-  vars_files:
-    - vars/env_staging.yml
-    - vault/staging.vault
 
   roles:
     - shutdown_containers #Flask
